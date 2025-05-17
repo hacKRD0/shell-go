@@ -38,7 +38,7 @@ func handleCommand(input []string) ([]byte, error) {
 	cmd, _ := strings.TrimSpace(input[0]), input[1:]
 	
 	// Handle exit
-	if cmd == "exit\n" {
+	if cmd == "exit" {
 		os.Exit(0)
 	}
 
