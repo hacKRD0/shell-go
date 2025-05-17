@@ -10,12 +10,17 @@ import (
 var _ = fmt.Fprint
 
 func main() {
-	// Uncomment this block to pass the first stage
-	fmt.Fprint(os.Stdout, "$ ")
-
-	// Wait for user input
 	for {
-		cmd, _ := bufio.NewReader(os.Stdin).ReadString('\n')
+		// Uncomment this block to pass the first stage
+		fmt.Fprint(os.Stdout, "$ ")
+
+		// Wait for user input
+		cmd, err := bufio.NewReader(os.Stdin).ReadString('\n')
+
+		// Handle errors
+		if err != nil {
+			continue
+		}
 
 		// Handle user input
 		go handleCommand(cmd)
