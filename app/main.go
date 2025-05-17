@@ -23,11 +23,18 @@ func main() {
 		}
 
 		// Handle user input
-		go handleCommand(cmd)
+		_, err = handleCommand(cmd)
+
+		// Handle errors
+		if err != nil {
+			continue
+		}
 	}
 }
 
-func handleCommand(cmd string) {
+func handleCommand(cmd string) ([]byte, error) {
 	// Print user input
 	fmt.Fprint(os.Stdout, cmd[:len(cmd)-1] + ": command not found\n")
+
+	return nil, nil
 }
