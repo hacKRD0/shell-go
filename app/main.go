@@ -33,6 +33,11 @@ func main() {
 }
 
 func handleCommand(cmd string) ([]byte, error) {
+	// Handle exit
+	if cmd == "exit\n" {
+		os.Exit(0)
+	}
+
 	// Print user input
 	fmt.Fprint(os.Stdout, cmd[:len(cmd)-1] + ": command not found\n")
 
