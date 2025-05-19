@@ -55,7 +55,7 @@ func handleCommand(input []string) ([]byte, error) {
 			k := strings.TrimSpace(args[0])
 			_, ok := builtins[k]
 			if ok {
-				fmt.Println(k + " is a shell built-in")
+				fmt.Println(k + " is a shell builtin")
 			} else {
 				fmt.Print(k, ": not found\n")
 			} 
