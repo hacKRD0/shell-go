@@ -24,7 +24,7 @@ func main() {
 		}
 
 		// Handle user input
-		_, err = handleCommand(strings.Split(input, " "))
+		_, err = handleCommand(strings.Split(strings.TrimSpace(input), " "))
 
 		// Handle errors
 		if err != nil {
@@ -36,16 +36,31 @@ func main() {
 func handleCommand(input []string) ([]byte, error) {
 	// Parse user input
 	cmd, args := strings.TrimSpace(input[0]), input[1:]
+
+	// Built-in commands map
+	builtins := map[string]int{
+		"exit": 0,
+		"echo": 1,
+		"type": 2,
+	}
 	
 	// Handle exit
 	switch cmd {
 		case "exit":
 			os.Exit(0)
 		case "echo": 
-			fmt.Fprint(os.Stdout, strings.Join(args, " "))
+			fmt.Println(strings.Join(args, " "))
+		case "type":
+			// Check if the command is built-in
+			k := strings.TrimSpace(args[0])
+			_, ok := builtins[k]
+			if ok {
+				fmt.Println(k + " is a built-in command")
+			} else {
+				fmt.Print(k, ": not found\n")
+			} 
 		default:
-			// Print user input
-			fmt.Fprint(os.Stdout, cmd + ": command not found\n")
+			fmt.Print(cmd, ": command not found\n")
 	}
 
 	return nil, nil
