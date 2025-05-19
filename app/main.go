@@ -14,54 +14,42 @@ func main() {
 	for {
 		// Uncomment this block to pass the first stage
 		fmt.Fprint(os.Stdout, "$ ")
-
+		
 		// Wait for user input
 		input, err := bufio.NewReader(os.Stdin).ReadString('\n')
-
+		
 		// Handle errors
 		if err != nil {
 			continue
 		}
-
+		
 		// Handle user input
-		_, err = handleCommand(strings.Split(strings.TrimSpace(input), " "))
-
-		// Handle errors
-		if err != nil {
-			continue
-		}
+		handleCommand(strings.Split(strings.TrimSpace(input), " "))
 	}
 }
 
-func handleCommand(input []string) ([]byte, error) {
+func handleCommand(input []string) {
 	// Parse user input
-	cmd, args := strings.TrimSpace(input[0]), input[1:]
+	cmd, argv := strings.TrimSpace(input[0]), input[1:]
 
 	// Built-in commands map
-	builtins := map[string]int{
+	builtIns := map[string]int{
 		"exit": 0,
 		"echo": 1,
 		"type": 2,
 	}
+
+	c := NewCommandsHandler(builtIns, cmd, argv)
 	
 	// Handle exit
 	switch cmd {
 		case "exit":
-			os.Exit(0)
+			c.Exit()
 		case "echo": 
-			fmt.Println(strings.Join(args, " "))
+			c.Echo()
 		case "type":
-			// Check if the command is built-in
-			k := strings.TrimSpace(args[0])
-			_, ok := builtins[k]
-			if ok {
-				fmt.Println(k + " is a shell builtin")
-			} else {
-				fmt.Print(k, ": not found\n")
-			} 
+			c.Type()
 		default:
-			fmt.Print(cmd, ": command not found\n")
+			fmt.Println(cmd, ": command not found")
 	}
-
-	return nil, nil
 }
