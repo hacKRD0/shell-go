@@ -35,15 +35,18 @@ func main() {
 
 func handleCommand(input []string) ([]byte, error) {
 	// Parse user input
-	cmd, _ := strings.TrimSpace(input[0]), input[1:]
+	cmd, args := strings.TrimSpace(input[0]), input[1:]
 	
 	// Handle exit
-	if cmd == "exit" {
-		os.Exit(0)
+	switch cmd {
+		case "exit":
+			os.Exit(0)
+		case "echo": 
+			fmt.Fprint(os.Stdout, strings.Join(args, " ") + "\n")
+		default:
+			// Print user input
+			fmt.Fprint(os.Stdout, cmd + ": command not found\n")
 	}
-
-	// Print user input
-	fmt.Fprint(os.Stdout, cmd + ": command not found\n")
 
 	return nil, nil
 }
