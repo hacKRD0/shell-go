@@ -42,7 +42,7 @@ func handleCommand(input []string) ([]byte, error) {
 		case "exit":
 			os.Exit(0)
 		case "echo": 
-			fmt.Fprint(os.Stdout, strings.Join(args, " ") + "\n")
+			fmt.Fprint(os.Stdout, strings.Join(args, " "))
 		default:
 			// Print user input
 			fmt.Fprint(os.Stdout, cmd + ": command not found\n")
