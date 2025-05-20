@@ -49,6 +49,6 @@ func (c *commands) Type() {
 		fmt.Println(k, "is " + path)	
 		return
 	} 
-	fmt.Println(k, ": not found")
+	fmt.Println(k + ": not found")
 }
 
