@@ -59,7 +59,7 @@ func (c * commands) Default() {
 	path, found := FindInPath(c.cmd)
 	if found {
 		executable := exec.Command(path, c.argv...)
-		fmt.Printf("Program was passed %d args (including program name)\n", len(c.argv) + 1)
+		fmt.Printf("Program was passed %d args (including program name).\n", len(c.argv) + 1)
 		_, _ = executable.Output()
 	} else {
 		fmt.Println(c.cmd + ": command not found")
