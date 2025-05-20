@@ -50,6 +50,6 @@ func handleCommand(input []string) {
 		case "type":
 			c.Type()
 		default:
-			fmt.Println(cmd, ": command not found")
+			fmt.Println(cmd + ": command not found")
 	}
 }
