@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"strings"
 )
 
@@ -10,6 +11,7 @@ type Commands interface {
 	Exit()
 	Echo()
 	Type()
+	Default()
 }
 
 type commands struct {
@@ -52,3 +54,13 @@ func (c *commands) Type() {
 	fmt.Println(k + ": not found")
 }
 
+
+func (c * commands) Default() {
+	path, found := FindInPath(c.cmd)
+	if found {
+		executable := exec.Command(path, c.argv...)
+		_, _ = executable.Output()
+	} else {
+		fmt.Println(c.cmd + ": command not found")
+	}
+}
