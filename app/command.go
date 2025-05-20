@@ -46,7 +46,7 @@ func (c *commands) Type() {
 	// Check if the argument is in a directory defined in the path variable 
 	path, found := FindInPath(k)
 	if found {
-		fmt.Println(k, " is " + path + "/" + k)	
+		fmt.Println(k, "is " + path)	
 		return
 	} 
 	fmt.Println(k, ": not found")
