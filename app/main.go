@@ -30,7 +30,7 @@ func main() {
 
 func handleCommand(input []string) {
 	// Parse user input
-	cmd, argv := strings.TrimSpace(input[0]), input[1:]
+	cmd, argv := strings.TrimSpace(input[0]), input
 
 	// Built-in commands map
 	builtIns := map[string]int{

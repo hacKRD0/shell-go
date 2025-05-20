@@ -33,12 +33,12 @@ func (c *commands) Exit() {
 }
 
 func (c *commands) Echo() {
-	fmt.Println(strings.Join(c.argv, " "))
+	fmt.Println(strings.Join(c.argv[1:], " "))
 }
 
 func (c *commands) Type() {
 	// Check if the argument is built-in
-	k := strings.TrimSpace(c.argv[0])
+	k := strings.TrimSpace(c.argv[1])
 	_, ok := c.builtIns[k]
 	if ok {
 		fmt.Println(k + " is a shell builtin")
@@ -59,8 +59,12 @@ func (c * commands) Default() {
 	path, found := FindInPath(c.cmd)
 	if found {
 		executable := exec.Command(path, c.argv...)
-		fmt.Printf("Program was passed %d args (including program name).\n", len(c.argv) + 1)
-		_, _ = executable.Output()
+		fmt.Printf("Program was passed %d args (including program name).\n", len(c.argv))
+		for i, arg := range c.argv {
+			fmt.Printf("Arg #%d (program name): %s\n", i, arg)
+		}
+		output, _ := executable.Output()
+		fmt.Println("Program Signature:", string(output))
 	} else {
 		fmt.Println(c.cmd + ": command not found")
 	}
