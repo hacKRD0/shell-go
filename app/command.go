@@ -61,7 +61,11 @@ func (c * commands) Default() {
 		executable := exec.Command(path, c.argv...)
 		fmt.Printf("Program was passed %d args (including program name).\n", len(c.argv))
 		for i, arg := range c.argv {
-			fmt.Printf("Arg #%d (program name): %s\n", i, arg)
+			pgn := ""
+			if i == 0 {
+				pgn = " (program name)"
+			}
+			fmt.Printf("Arg #%d%s: %s\n", i, pgn, arg)
 		}
 		output, _ := executable.Output()
 		fmt.Println("Program Signature:", string(output))
