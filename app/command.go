@@ -59,16 +59,18 @@ func (c * commands) Default() {
 	path, found := FindInPath(c.cmd)
 	if found {
 		executable := exec.Command(path, c.argv...)
-		fmt.Printf("Program was passed %d args (including program name).\n", len(c.argv))
-		for i, arg := range c.argv {
-			pgn := ""
-			if i == 0 {
-				pgn = " (program name)"
-			}
-			fmt.Printf("Arg #%d%s: %s\n", i, pgn, arg)
-		}
-		output, _ := executable.Output()
-		fmt.Println("Program Signature:", string(output))
+		// fmt.Printf("Program was passed %d args (including program name).\n", len(c.argv))
+		// for i, arg := range c.argv {
+		// 	pgn := ""
+		// 	if i == 0 {
+		// 		pgn = " (program name)"
+		// 	}
+		// 	fmt.Printf("Arg #%d%s: %s\n", i, pgn, arg)
+		// }
+		executable.Stdout = os.Stdout
+		executable.Stderr = os.Stderr
+		executable.Run()
+		// fmt.Println("Program Signature:", string(output))
 	} else {
 		fmt.Println(c.cmd + ": command not found")
 	}
