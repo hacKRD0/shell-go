@@ -56,9 +56,9 @@ func (c *commands) Type() {
 
 
 func (c * commands) Default() {
-	path, found := FindInPath(c.cmd)
+	_, found := FindInPath(c.cmd)
 	if found {
-		executable := exec.Command(path, c.argv[1:]...)
+		executable := exec.Command(c.cmd, c.argv[1:]...)
 		// fmt.Printf("Program was passed %d args (including program name).\n", len(c.argv))
 		// for i, arg := range c.argv {
 		// 	pgn := ""
