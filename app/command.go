@@ -31,9 +31,9 @@ func NewCommandsHandler(builtIns map[string]int ,cmd string, argv []string) *com
 }
 
 func (c *commands) Cd() {
-	dir := strings.TrimSpace(c.argv[1])
-	if dir == "" {
-		dir = "~"
+	dir := os.Getenv("HOME")
+	if len(c.argv) > 2 && c.argv[1] != "~" {
+		dir = strings.TrimSpace(c.argv[1])
 	}
 
 	err := os.Chdir(dir)
