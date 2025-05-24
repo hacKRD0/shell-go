@@ -49,6 +49,8 @@ func handleCommand(input []string) {
 			c.Echo()
 		case "type":
 			c.Type()
+		case "pwd":
+			c.Pwd()
 		default:
 			c.Default()
 	}

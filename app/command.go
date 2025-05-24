@@ -11,6 +11,7 @@ type Commands interface {
 	Exit()
 	Echo()
 	Type()
+	Pwd()
 	Default()
 }
 
@@ -26,6 +27,15 @@ func NewCommandsHandler(builtIns map[string]int ,cmd string, argv []string) *com
 		argv: argv,
 		cmd: cmd,
 	}
+}
+
+func (c *commands) Pwd() {
+	wd, err := os.Getwd()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(wd)
 }
 
 func (c *commands) Exit() {
@@ -59,18 +69,9 @@ func (c * commands) Default() {
 	_, found := FindInPath(c.cmd)
 	if found {
 		executable := exec.Command(c.cmd, c.argv[1:]...)
-		// fmt.Printf("Program was passed %d args (including program name).\n", len(c.argv))
-		// for i, arg := range c.argv {
-		// 	pgn := ""
-		// 	if i == 0 {
-		// 		pgn = " (program name)"
-		// 	}
-		// 	fmt.Printf("Arg #%d%s: %s\n", i, pgn, arg)
-		// }
 		executable.Stdout = os.Stdout
 		executable.Stderr = os.Stderr
 		executable.Run()
-		// fmt.Println("Program Signature:", string(output))
 	} else {
 		fmt.Println(c.cmd + ": command not found")
 	}
