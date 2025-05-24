@@ -37,6 +37,7 @@ func handleCommand(input []string) {
 		"exit": 0,
 		"echo": 1,
 		"type": 2,
+		"pwd": 3,
 	}
 
 	c := NewCommandsHandler(builtIns, cmd, argv)
