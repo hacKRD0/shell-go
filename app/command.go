@@ -67,21 +67,23 @@ func (c *commands) Echo() {
 }
 
 func (c *commands) Type() {
-	// Check if the argument is built-in
-	k := strings.TrimSpace(c.argv[1])
-	_, ok := c.builtIns[k]
-	if ok {
-		fmt.Println(k + " is a shell builtin")
-		return 
+	for _, arg := range c.argv[1:] {
+		// Check if the argument is built-in
+		k := strings.TrimSpace(arg)
+		_, ok := c.builtIns[k]
+		if ok {
+			fmt.Println(k + " is a shell builtin")
+			continue 
+		}
+	
+		// Check if the argument is in a directory defined in the path variable 
+		path, found := FindInPath(k)
+		if found {
+			fmt.Println(k, "is " + path)	
+			continue
+		} 
+		fmt.Println(k + ": not found")
 	}
-
-	// Check if the argument is in a directory defined in the path variable 
-	path, found := FindInPath(k)
-	if found {
-		fmt.Println(k, "is " + path)	
-		return
-	} 
-	fmt.Println(k + ": not found")
 }
 
 
