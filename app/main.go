@@ -38,6 +38,7 @@ func handleCommand(input []string) {
 		"echo": 1,
 		"type": 2,
 		"pwd": 3,
+		"cd": 4,
 	}
 
 	c := NewCommandsHandler(builtIns, cmd, argv)
@@ -52,6 +53,8 @@ func handleCommand(input []string) {
 			c.Type()
 		case "pwd":
 			c.Pwd()
+		case "cd":
+			c.Cd()
 		default:
 			c.Default()
 	}

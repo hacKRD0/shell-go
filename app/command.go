@@ -12,6 +12,7 @@ type Commands interface {
 	Echo()
 	Type()
 	Pwd()
+	Cd()
 	Default()
 }
 
@@ -28,6 +29,20 @@ func NewCommandsHandler(builtIns map[string]int ,cmd string, argv []string) *com
 		cmd: cmd,
 	}
 }
+
+func (c *commands) Cd() {
+	dir := strings.TrimSpace(c.argv[1])
+	if dir == "" {
+		dir = "~"
+	}
+
+	err := os.Chdir(dir)
+	if err != nil {
+		fmt.Println("cd: " + dir + ": No such file or directory")
+	}
+}
+
+
 
 func (c *commands) Pwd() {
 	wd, err := os.Getwd()
