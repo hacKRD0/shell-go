@@ -31,8 +31,13 @@ func NewCommandsHandler(builtIns map[string]int ,cmd string, argv []string) *com
 }
 
 func (c *commands) Cd() {
-	dir := os.Getenv("HOME")
-	if len(c.argv) > 2 && c.argv[1] != "~" {
+	if len(c.argv) > 2 {
+		fmt.Println("bash: cd: too many arguments")
+		return
+	}
+
+ 	dir := os.Getenv("HOME")
+	if len(c.argv) == 2 && c.argv[1] != "~" {
 		dir = strings.TrimSpace(c.argv[1])
 	}
 
@@ -45,8 +50,12 @@ func (c *commands) Cd() {
 
 
 func (c *commands) Pwd() {
-	pwd := os.Getenv("PWD") 
-	fmt.Println(pwd)
+	wd, err := os.Getwd()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(wd)
 }
 
 func (c *commands) Exit() {
