@@ -45,12 +45,8 @@ func (c *commands) Cd() {
 
 
 func (c *commands) Pwd() {
-	wd, err := os.Getwd()
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(wd)
+	pwd := os.Getenv("PWD") 
+	fmt.Println(pwd)
 }
 
 func (c *commands) Exit() {
