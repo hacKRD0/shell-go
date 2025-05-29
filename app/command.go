@@ -45,11 +45,12 @@ func (c *commands) Cat() {
 		defer f.Close()
 		content, err := os.ReadFile(file)
 		if err != nil {
-			fmt.Printf("cat: %s: %v\n", file, err)
+			fmt.Printf("cat: %s: %v", file, err)
 			continue
 		}
-		fmt.Println(string(content))
+		fmt.Print(string(content))
 	}
+	fmt.Println() // Ensure a newline after the last file's content
 }
 
 func (c *commands) Cd() {
