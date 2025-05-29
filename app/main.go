@@ -44,7 +44,6 @@ func handleCommand(fullCommand string) {
 		"type": 2,
 		"pwd": 3,
 		"cd": 4,
-		"cat": 5,
 	}
 
 	c := NewCommandsHandler(builtIns, cmd, argv)
@@ -61,8 +60,6 @@ func handleCommand(fullCommand string) {
 			c.Pwd()
 		case "cd":
 			c.Cd()
-		// case "cat":
-		// 	c.Cat()
 		default:
 			c.Default()
 	}

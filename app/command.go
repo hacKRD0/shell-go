@@ -13,7 +13,6 @@ type Commands interface {
 	Type()
 	Pwd()
 	Cd()
-	// Cat()
 	Default()
 }
 
@@ -30,28 +29,6 @@ func NewCommandsHandler(builtIns map[string]int ,cmd string, argv []string) *com
 		cmd: cmd,
 	}
 }
-
-// func (c *commands) Cat() {
-// 	if len(c.argv) < 2 {
-// 		fmt.Println("cat: missing file operand")
-// 		return
-// 	}
-// 	for _, file := range c.argv[1:] {
-// 		f, err := os.Open(file)
-// 		if err != nil {
-// 			fmt.Printf("cat: %s: %v\n", file, err)
-// 			continue
-// 		}
-// 		defer f.Close()
-// 		content, err := os.ReadFile(file)
-// 		if err != nil {
-// 			fmt.Printf("cat: %s: %v", file, err)
-// 			continue
-// 		}
-// 		fmt.Print(string(content))
-// 	}
-// 	fmt.Println() // Ensure a newline after the last file's content
-// }
 
 func (c *commands) Cd() {
 	if len(c.argv) > 2 {
