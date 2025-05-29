@@ -61,8 +61,8 @@ func handleCommand(fullCommand string) {
 			c.Pwd()
 		case "cd":
 			c.Cd()
-		case "cat":
-			c.Cat()
+		// case "cat":
+		// 	c.Cat()
 		default:
 			c.Default()
 	}
