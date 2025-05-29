@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func FindInPath(cmd string) (string, bool) {
+func FindExecutable(cmd string) (string, bool) {
 	path := os.Getenv("PATH")
 	for _, dir := range strings.Split(path, ":") {
 		filepath := dir + "/" + cmd

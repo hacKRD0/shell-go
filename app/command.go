@@ -13,6 +13,7 @@ type Commands interface {
 	Type()
 	Pwd()
 	Cd()
+	Cat()
 	Default()
 }
 
@@ -27,6 +28,27 @@ func NewCommandsHandler(builtIns map[string]int ,cmd string, argv []string) *com
 		builtIns: builtIns,
 		argv: argv,
 		cmd: cmd,
+	}
+}
+
+func (c *commands) Cat() {
+	if len(c.argv) < 2 {
+		fmt.Println("cat: missing file operand")
+		return
+	}
+	for _, file := range c.argv[1:] {
+		f, err := os.Open(file)
+		if err != nil {
+			fmt.Printf("cat: %s: %v\n", file, err)
+			continue
+		}
+		defer f.Close()
+		content, err := os.ReadFile(file)
+		if err != nil {
+			fmt.Printf("cat: %s: %v\n", file, err)
+			continue
+		}
+		fmt.Println(string(content))
 	}
 }
 
@@ -46,8 +68,6 @@ func (c *commands) Cd() {
 		fmt.Println("cd: " + dir + ": No such file or directory")
 	}
 }
-
-
 
 func (c *commands) Pwd() {
 	wd, err := os.Getwd()
@@ -77,7 +97,7 @@ func (c *commands) Type() {
 		}
 	
 		// Check if the argument is in a directory defined in the path variable 
-		path, found := FindInPath(k)
+		path, found := FindExecutable(k)
 		if found {
 			fmt.Println(k, "is " + path)	
 			continue
@@ -88,7 +108,7 @@ func (c *commands) Type() {
 
 
 func (c * commands) Default() {
-	_, found := FindInPath(c.cmd)
+	_, found := FindExecutable(c.cmd)
 	if found {
 		executable := exec.Command(c.cmd, c.argv[1:]...)
 		executable.Stdout = os.Stdout

@@ -16,7 +16,7 @@ func main() {
 		fmt.Fprint(os.Stdout, "$ ")
 		
 		// Wait for user input
-		input, err := bufio.NewReader(os.Stdin).ReadString('\n')
+		fullCommand, err := bufio.NewReader(os.Stdin).ReadString('\n')
 		
 		// Handle errors
 		if err != nil {
@@ -24,13 +24,18 @@ func main() {
 		}
 		
 		// Handle user input
-		handleCommand(strings.Split(strings.TrimSpace(input), " "))
+		handleCommand(strings.TrimSpace(fullCommand))
 	}
 }
 
-func handleCommand(input []string) {
-	// Parse user input
-	cmd, argv := strings.TrimSpace(input[0]), input
+func handleCommand(fullCommand string) {
+	// Parse the command line input
+	argv, err := NewParser(fullCommand).ParseTokens()
+	if err != nil {
+		fmt.Println("Error parsing command:", err)
+		return
+	}
+	cmd := argv[0]
 
 	// Built-in commands map
 	builtIns := map[string]int{
@@ -39,12 +44,13 @@ func handleCommand(input []string) {
 		"type": 2,
 		"pwd": 3,
 		"cd": 4,
+		"cat": 5,
 	}
 
 	c := NewCommandsHandler(builtIns, cmd, argv)
 	
 	// Handle exit
-	switch cmd {
+	switch c.cmd {
 		case "exit":
 			c.Exit()
 		case "echo": 
@@ -55,6 +61,8 @@ func handleCommand(input []string) {
 			c.Pwd()
 		case "cd":
 			c.Cd()
+		case "cat":
+			c.Cat()
 		default:
 			c.Default()
 	}
